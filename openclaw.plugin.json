@@ -7,6 +7,31 @@
   "homepage": "https://agent-did.xyz",
   "license": "MIT",
   "entry": "dist/index.js",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "keystorePath": {
+        "type": "string",
+        "description": "Custom path to agent-did keystore (defaults to ~/.agent-did)"
+      },
+      "defaultPassphrase": {
+        "type": "string",
+        "description": "Default passphrase for keystore encryption (can be overridden by AGENT_DID_PASSPHRASE)"
+      }
+    }
+  },
+  "uiHints": {
+    "keystorePath": {
+      "label": "Keystore Path",
+      "placeholder": "~/.agent-did"
+    },
+    "defaultPassphrase": {
+      "label": "Default Passphrase",
+      "sensitive": true,
+      "placeholder": "Leave empty to use AGENT_DID_PASSPHRASE env var"
+    }
+  },
   "commands": {
     "agent-did": {
       "description": "Manage AI agent identities with DIDs and Verifiable Credentials",
