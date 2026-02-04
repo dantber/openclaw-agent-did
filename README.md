@@ -5,7 +5,7 @@ OpenClaw plugin for W3C-compliant DID and Verifiable Credential management for A
 ## Installation
 
 ```bash
-openclaw plugin install @dantber/openclaw-agent-did
+openclaw plugins install dantber/openclaw-agent-did
 ```
 
 ## Usage
