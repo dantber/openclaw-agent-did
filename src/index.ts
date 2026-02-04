@@ -33,49 +33,46 @@ interface OpenClawAPI {
 export function register(api: OpenClawAPI): void {
   api.registerCli(
     ({ program }) => {
-      // Main command
-      const agentDidCommand = program
-        .command('agent-did')
-        .description('Manage AI agent identities with DIDs and Verifiable Credentials')
-        .version('0.1.3');
+      // Create main agent-did command using program.command() (not new Command())
+      const agentDidCmd = program.command('agent-did')
+        .description('Manage AI agent identities with DIDs and Verifiable Credentials');
 
-      // Create command group
-      const createCommand = new Command('create')
+      // Create command group - use agentDidCmd.command() not new Command()
+      const createCmd = agentDidCmd.command('create')
         .description('Create new identities');
-      createCommand.addCommand(createOwnerCommand());
-      createCommand.addCommand(createAgentCommand());
-      agentDidCommand.addCommand(createCommand);
 
-      // Identity management commands (top-level under agent-did)
-      agentDidCommand.addCommand(identityListCommand());
-      agentDidCommand.addCommand(identityInspectCommand());
-      agentDidCommand.addCommand(identityDeleteCommand());
+      // Add subcommands - these are Command instances but we add them to a parent created with .command()
+      createCmd.addCommand(createOwnerCommand());
+      createCmd.addCommand(createAgentCommand());
+
+      // Identity commands
+      agentDidCmd.addCommand(identityListCommand());
+      agentDidCmd.addCommand(identityInspectCommand());
+      agentDidCmd.addCommand(identityDeleteCommand());
 
       // VC command group
-      const vcCommand = new Command('vc')
+      const vcCmd = agentDidCmd.command('vc')
         .description('Verifiable Credential operations');
 
       // VC issue subcommand group
-      const issueCommand = new Command('issue')
+      const issueCmd = vcCmd.command('issue')
         .description('Issue credentials');
-      issueCommand.addCommand(issueOwnershipCommand());
-      issueCommand.addCommand(issueCapabilityCommand());
-      vcCommand.addCommand(issueCommand);
+
+      issueCmd.addCommand(issueOwnershipCommand());
+      issueCmd.addCommand(issueCapabilityCommand());
 
       // VC management commands
-      vcCommand.addCommand(vcVerifyCommand());
-      vcCommand.addCommand(vcListCommand());
-      vcCommand.addCommand(vcInspectCommand());
-      vcCommand.addCommand(vcDeleteCommand());
-
-      agentDidCommand.addCommand(vcCommand);
+      vcCmd.addCommand(vcVerifyCommand());
+      vcCmd.addCommand(vcListCommand());
+      vcCmd.addCommand(vcInspectCommand());
+      vcCmd.addCommand(vcDeleteCommand());
 
       // Auth command group
-      const authCommand = new Command('auth')
+      const authCmd = agentDidCmd.command('auth')
         .description('Authentication operations (sign/verify challenges)');
-      authCommand.addCommand(signCommand());
-      authCommand.addCommand(authVerifyCommand());
-      agentDidCommand.addCommand(authCommand);
+
+      authCmd.addCommand(signCommand());
+      authCmd.addCommand(authVerifyCommand());
     },
     { commands: ['agent-did'] }
   );
