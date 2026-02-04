@@ -1,0 +1,15 @@
+{
+  "name": "agent-did",
+  "version": "0.1.0",
+  "description": "W3C-compliant DID and Verifiable Credential management for AI agents",
+  "author": "Bernardo Dantas",
+  "homepage": "https://agent-did.xyz",
+  "license": "MIT",
+  "entry": "dist/index.js",
+  "commands": {
+    "agent-did": {
+      "description": "Manage AI agent identities with DIDs and Verifiable Credentials",
+      "subcommands": true
+    }
+  }
+}
