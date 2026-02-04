@@ -20,7 +20,10 @@ import { signCommand, verifyCommand as authVerifyCommand } from './commands/auth
  * This is provided by OpenClaw when the plugin is loaded
  */
 interface OpenClawAPI {
-  registerCli(command: string, program: Command): void;
+  registerCli(
+    callback: (context: { program: Command }) => void,
+    options: { commands: string[] }
+  ): void;
 }
 
 /**
@@ -28,48 +31,52 @@ interface OpenClawAPI {
  * Called by OpenClaw when loading the plugin
  */
 export function register(api: OpenClawAPI): void {
-  const program = new Command('agent-did')
-    .description('Manage AI agent identities with DIDs and Verifiable Credentials')
-    .version('0.1.0');
+  api.registerCli(
+    ({ program }) => {
+      // Main command
+      const agentDidCommand = program
+        .command('agent-did')
+        .description('Manage AI agent identities with DIDs and Verifiable Credentials')
+        .version('0.1.3');
 
-  // Create command group
-  const createCommand = new Command('create')
-    .description('Create new identities');
-  createCommand.addCommand(createOwnerCommand());
-  createCommand.addCommand(createAgentCommand());
-  program.addCommand(createCommand);
+      // Create command group
+      const createCommand = new Command('create')
+        .description('Create new identities');
+      createCommand.addCommand(createOwnerCommand());
+      createCommand.addCommand(createAgentCommand());
+      agentDidCommand.addCommand(createCommand);
 
-  // Identity management commands (top-level)
-  program.addCommand(identityListCommand());
-  program.addCommand(identityInspectCommand());
-  program.addCommand(identityDeleteCommand());
+      // Identity management commands (top-level under agent-did)
+      agentDidCommand.addCommand(identityListCommand());
+      agentDidCommand.addCommand(identityInspectCommand());
+      agentDidCommand.addCommand(identityDeleteCommand());
 
-  // VC command group
-  const vcCommand = new Command('vc')
-    .description('Verifiable Credential operations');
+      // VC command group
+      const vcCommand = new Command('vc')
+        .description('Verifiable Credential operations');
 
-  // VC issue subcommand group
-  const issueCommand = new Command('issue')
-    .description('Issue credentials');
-  issueCommand.addCommand(issueOwnershipCommand());
-  issueCommand.addCommand(issueCapabilityCommand());
-  vcCommand.addCommand(issueCommand);
+      // VC issue subcommand group
+      const issueCommand = new Command('issue')
+        .description('Issue credentials');
+      issueCommand.addCommand(issueOwnershipCommand());
+      issueCommand.addCommand(issueCapabilityCommand());
+      vcCommand.addCommand(issueCommand);
 
-  // VC management commands
-  vcCommand.addCommand(vcVerifyCommand());
-  vcCommand.addCommand(vcListCommand());
-  vcCommand.addCommand(vcInspectCommand());
-  vcCommand.addCommand(vcDeleteCommand());
+      // VC management commands
+      vcCommand.addCommand(vcVerifyCommand());
+      vcCommand.addCommand(vcListCommand());
+      vcCommand.addCommand(vcInspectCommand());
+      vcCommand.addCommand(vcDeleteCommand());
 
-  program.addCommand(vcCommand);
+      agentDidCommand.addCommand(vcCommand);
 
-  // Auth command group
-  const authCommand = new Command('auth')
-    .description('Authentication operations (sign/verify challenges)');
-  authCommand.addCommand(signCommand());
-  authCommand.addCommand(authVerifyCommand());
-  program.addCommand(authCommand);
-
-  // Register with OpenClaw
-  api.registerCli('agent-did', program);
+      // Auth command group
+      const authCommand = new Command('auth')
+        .description('Authentication operations (sign/verify challenges)');
+      authCommand.addCommand(signCommand());
+      authCommand.addCommand(authVerifyCommand());
+      agentDidCommand.addCommand(authCommand);
+    },
+    { commands: ['agent-did'] }
+  );
 }

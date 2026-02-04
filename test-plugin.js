@@ -10,9 +10,17 @@ const { Command } = require('commander');
 
 // Mock OpenClaw API
 const mockApi = {
-  registerCli: (name, program) => {
-    console.log(`✓ Plugin registered command: ${name}`);
-    console.log(`✓ Program has ${program.commands.length} subcommands:\n`);
+  registerCli: (callback, options) => {
+    console.log(`✓ Plugin registered commands: ${options.commands.join(', ')}`);
+
+    // Create a mock program (simulating OpenClaw's Commander instance)
+    const program = new Command();
+
+    // Call the plugin's callback with the program
+    callback({ program });
+
+    // List all commands that were registered
+    console.log(`✓ Program has ${program.commands.length} top-level commands:\n`);
 
     // List all commands recursively
     function listCommands(cmd, indent = '  ') {

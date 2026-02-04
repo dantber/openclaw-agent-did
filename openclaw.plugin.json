@@ -1,7 +1,7 @@
 {
   "id": "openclaw-agent-did",
   "name": "agent-did",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "W3C-compliant DID and Verifiable Credential management for AI agents",
   "author": "Bernardo Dantas",
   "homepage": "https://agent-did.xyz",
