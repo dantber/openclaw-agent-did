@@ -1,5 +1,5 @@
 {
-  "name": "@agent-did/openclaw-plugin",
+  "name": "@dantber/openclaw-agent-did",
   "version": "0.1.0",
   "description": "OpenClaw plugin for W3C-compliant DID and Verifiable Credential management for AI agents",
   "main": "dist/index.js",
@@ -18,12 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dantber/agent-did.git",
-    "directory": "openclaw-plugin"
+    "url": "https://github.com/dantber/openclaw-agent-did.git"
   },
   "homepage": "https://agent-did.xyz",
   "bugs": {
-    "url": "https://github.com/dantber/agent-did/issues"
+    "url": "https://github.com/dantber/openclaw-agent-did/issues"
   },
   "files": [
     "dist",
