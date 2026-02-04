@@ -5,12 +5,7 @@ OpenClaw plugin for W3C-compliant DID and Verifiable Credential management for A
 ## Installation
 
 ```bash
-cd /Users/bernardo/www/casao.dev/agent-did/openclaw-plugin
-npm install
-npm run build
-
-# Install plugin in OpenClaw
-openclaw plugin install /Users/bernardo/www/casao.dev/agent-did/openclaw-plugin
+openclaw plugin install @dantber/openclaw-agent-did
 ```
 
 ## Usage
