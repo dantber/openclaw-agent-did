@@ -1,4 +1,5 @@
 {
+  "id": "openclaw-agent-did",
   "name": "agent-did",
   "version": "0.1.0",
   "description": "W3C-compliant DID and Verifiable Credential management for AI agents",
