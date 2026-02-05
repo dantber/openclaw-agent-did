@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import type { Command } from 'commander';
 import { signAuthChallenge, verifyAuthChallenge } from 'agent-did';
 import KeystoreManager from '../utils/keystore-manager.js';
 import { outputJson } from '../utils/output-formatter.js';
@@ -7,8 +7,8 @@ import { normalizeError, formatError } from '../utils/error-handler.js';
 /**
  * Sign authentication challenge command
  */
-export function signCommand(): Command {
-  return new Command('sign')
+export function signCommand(parent: Command): void {
+  parent.command('sign')
     .description('Sign an authentication challenge')
     .requiredOption('--did <did>', 'Agent DID to sign with')
     .requiredOption('--challenge <challenge>', 'Challenge string (nonce) to sign')
@@ -79,8 +79,8 @@ export function signCommand(): Command {
 /**
  * Verify authentication signature command
  */
-export function verifyCommand(): Command {
-  return new Command('verify')
+export function verifyCommand(parent: Command): void {
+  parent.command('verify')
     .description('Verify an authentication signature')
     .requiredOption('--did <did>', 'DID that signed the challenge')
     .requiredOption('--payload <payload>', 'Base64url-encoded payload')

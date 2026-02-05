@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import type { Command } from 'commander';
 import KeystoreManager from '../utils/keystore-manager.js';
 import { outputJson, formatDid, formatDate } from '../utils/output-formatter.js';
 import { normalizeError, formatError } from '../utils/error-handler.js';
@@ -6,8 +6,8 @@ import { normalizeError, formatError } from '../utils/error-handler.js';
 /**
  * List all identities command
  */
-export function listCommand(): Command {
-  return new Command('list')
+export function listCommand(parent: Command): void {
+  parent.command('list')
     .description('List all identities in the keystore')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')
     .option('--no-encryption', 'Keystore is not encrypted')
@@ -53,8 +53,8 @@ export function listCommand(): Command {
 /**
  * Inspect a specific identity command
  */
-export function inspectCommand(): Command {
-  return new Command('inspect')
+export function inspectCommand(parent: Command): void {
+  parent.command('inspect')
     .description('Inspect a specific identity')
     .requiredOption('--did <did>', 'DID to inspect')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')
@@ -109,8 +109,8 @@ export function inspectCommand(): Command {
 /**
  * Delete an identity command
  */
-export function deleteCommand(): Command {
-  return new Command('delete')
+export function deleteCommand(parent: Command): void {
+  parent.command('delete')
     .description('Delete an identity from the keystore')
     .requiredOption('--did <did>', 'DID to delete')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')

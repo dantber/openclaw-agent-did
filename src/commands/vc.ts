@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import type { Command } from 'commander';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
@@ -16,8 +16,8 @@ import { normalizeError, formatError } from '../utils/error-handler.js';
 /**
  * Issue ownership credential command
  */
-export function issueOwnershipCommand(): Command {
-  return new Command('ownership')
+export function issueOwnershipCommand(parent: Command): void {
+  parent.command('ownership')
     .description('Issue an ownership credential')
     .requiredOption('--issuer <did>', 'Issuer DID (owner)')
     .requiredOption('--subject <did>', 'Subject DID (agent)')
@@ -91,8 +91,8 @@ export function issueOwnershipCommand(): Command {
 /**
  * Issue capability credential command
  */
-export function issueCapabilityCommand(): Command {
-  return new Command('capability')
+export function issueCapabilityCommand(parent: Command): void {
+  parent.command('capability')
     .description('Issue a capability credential')
     .requiredOption('--issuer <did>', 'Issuer DID (owner)')
     .requiredOption('--subject <did>', 'Subject DID (agent)')
@@ -170,8 +170,8 @@ export function issueCapabilityCommand(): Command {
 /**
  * Verify credential command
  */
-export function verifyCommand(): Command {
-  return new Command('verify')
+export function verifyCommand(parent: Command): void {
+  parent.command('verify')
     .description('Verify a credential')
     .requiredOption('--file <file>', 'Path to JWT file')
     .option('--issuer <did>', 'Expected issuer DID')
@@ -239,8 +239,8 @@ export function verifyCommand(): Command {
 /**
  * List stored credentials command
  */
-export function listCommand(): Command {
-  return new Command('list')
+export function listCommand(parent: Command): void {
+  parent.command('list')
     .description('List stored credentials in the keystore')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')
     .option('--no-encryption', 'Keystore is not encrypted')
@@ -302,8 +302,8 @@ export function listCommand(): Command {
 /**
  * Delete stored credential command
  */
-export function deleteCommand(): Command {
-  return new Command('delete')
+export function deleteCommand(parent: Command): void {
+  parent.command('delete')
     .description('Delete a stored credential by ID')
     .requiredOption('--id <id>', 'Credential ID to delete')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')
@@ -344,8 +344,8 @@ export function deleteCommand(): Command {
 /**
  * Inspect credential command (decode without verifying)
  */
-export function inspectCommand(): Command {
-  return new Command('inspect')
+export function inspectCommand(parent: Command): void {
+  parent.command('inspect')
     .description('Decode a verifiable credential without verifying signature')
     .requiredOption('--file <path>', 'Path to credential file (JWT)')
     .option('--json', 'Output as JSON')

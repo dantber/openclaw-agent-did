@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import type { Command } from 'commander';
 import { generateKeyPair, publicKeyToDidKey } from 'agent-did';
 import KeystoreManager from '../utils/keystore-manager.js';
 import { formatOutput } from '../utils/output-formatter.js';
@@ -7,8 +7,8 @@ import { normalizeError, formatError } from '../utils/error-handler.js';
 /**
  * Create owner identity command
  */
-export function createOwnerCommand(): Command {
-  return new Command('owner')
+export function createOwnerCommand(parent: Command): void {
+  parent.command('owner')
     .description('Create a new owner identity')
     .requiredOption('-n, --name <name>', 'Name for the owner identity')
     .option('-s, --store <path>', 'Keystore path (default: ~/.agent-did)')
@@ -65,8 +65,8 @@ export function createOwnerCommand(): Command {
 /**
  * Create agent identity command
  */
-export function createAgentCommand(): Command {
-  return new Command('agent')
+export function createAgentCommand(parent: Command): void {
+  parent.command('agent')
     .description('Create a new agent identity')
     .requiredOption('-n, --name <name>', 'Name for the agent identity')
     .requiredOption('--owner <did>', 'DID of the owner')
