@@ -1,6 +1,6 @@
 {
   "name": "@dantber/openclaw-agent-did",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "OpenClaw plugin for W3C-compliant DID and Verifiable Credential management for AI agents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
