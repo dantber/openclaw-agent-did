@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/openclaw-agent-did.svg)](https://www.npmjs.com/package/agent-did)
+[![npm version](https://badge.fury.io/js/openclaw-agent-did.svg)](https://www.npmjs.com/package/openclaw-agent-did)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # agent-did OpenClaw Plugin
